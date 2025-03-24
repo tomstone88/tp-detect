@@ -205,7 +205,7 @@ logger.debug(`Skipping UserData scan for instance ${instanceId} - requires separ
   }
 
   return results
-};
+}
 
 /**
  * Scans Lambda functions for cryptojacking indicators
