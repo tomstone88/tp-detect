@@ -55,10 +55,18 @@ async function main() {
   logger.info(chalk.blue("Enhanced Cryptojacking Detection Tool"))
   logger.info(chalk.blue("======================================"))
 
-  const scanOptions: ScanOptions = {
-    ...options,
-    logger,
-  }
+  // Find this line in src/index.ts
+const scanOptions: ScanOptions = {
+  output: `crypto_scan_${new Date().toISOString().replace(/:/g, "-")}.txt`,
+  summary: `crypto_scan_summary_${new Date().toISOString().replace(/:/g, "-")}.txt`,
+  format: "text" as "text" | "json" | "csv",
+  logFile: `crypto_scan_log_${new Date().toISOString().replace(/:/g, "-")}.txt`,
+  verbose: false,
+  quiet: false,
+  localOnly: false,
+  base64Decode: true,
+  logger
+};
 
   try {
     // Start performance monitoring

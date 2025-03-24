@@ -112,19 +112,9 @@ async function scanEC2Instances(clientConfig: any, options: ScanOptions): Promis
       const instanceId = instance.InstanceId
       logger.debug(`Scanning EC2 instance: ${instanceId}`)
 
-      // Check UserData
-      if (instance.UserData) {
-        let userData = instance.UserData.Value || ""
-
-        // If base64 encoded, decode it
-        if (options.base64Decode && instance.UserData.Encoding === "base64") {
-          try {
-            userData = Buffer.from(userData, "base64").toString("utf-8")
-          } catch (error) {
-            logger.debug(`Error decoding UserData for instance ${instanceId}:`, error)
-          }
-        }
-
+      
+      
+      
         // Scan UserData content
         const matches = scanContent(userData, options)
 
@@ -141,6 +131,8 @@ async function scanEC2Instances(clientConfig: any, options: ScanOptions): Promis
           })
         }
       }
+
+logger.debug(`Skipping UserData scan for instance ${instanceId} - requires separate API call`)
 
       // Check tags
       if (instance.Tags && instance.Tags.length > 0) {
