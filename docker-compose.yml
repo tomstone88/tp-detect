@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  crypto-detector:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - SESSION_SECRET=your-secret-key
+    volumes:
+      - ./traces:/app/traces
+    restart: unless-stopped
+

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %> - Crypto Detector</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <%- include('partials/header') %>
+  
+  <div class="container mt-5">
+    <div class="row">
+      <div class="col-md-12">
+        <h1>Scan Results</h1>
+        <p class="lead">View and manage detected cryptojacking threats.</p>
+      </div>
+    </div>
+    
+    <div class="row mt-4">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Results Summary</h5>
+            <div class="row">
+              <div class="col-md-3">
+                <div class="card bg-danger text-white">
+                  <div class="card-body text-center">
+                    <h5 class="card-title">High Severity</h5>
+                    <h2 id="high-count">0</h2>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="card bg-warning text-dark">
+                  <div class="card-body text-center">
+                    <h5 class="card-title">Medium Severity</h5>
+                    <h2 id="medium-count">0</h2>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="card bg-info text-white">
+                  <div class="card-body text-center">
+                    <h5 class="card-title">Low Severity</h5>
+                    <h2 id="low-count">0</h2>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="card bg-success text-white">
+                  <div class="card-body text-center">
+                    <h5 class="card-title">Total Items</h5>
+                    <h2 id="total-count">0</h2>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="row mt-4">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Detected Threats</h5>
+            <div class="table-responsive">
+              <table class="table table-striped" id="results-table">
+                <thead>
+                  <tr>
+                    <th>Severity</th>
+                    <th>Source</th>
+                    <th>Type</th>
+                    <th>Score</th>
+                    <th>Preview</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="results-body">
+                  <tr>
+                    <td colspan="6" class="text-center">No results found.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Result Detail Modal -->
+    <div class="modal fade" id="result-detail-modal" tabindex="-1" aria-labelledby="result-detail-modal-label" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="result-detail-modal-label">Result Details</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body" id="result-detail-content">
+            <!-- Content will be dynamically populated -->
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" id="terminate-btn">Terminate Miner</button>
+            <button type="button" class="btn btn-primary" id="trace-btn">Initiate Trace</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Trace Detail Modal -->
+    <div class="modal fade" id="trace-detail-modal" tabindex="-1" aria-labelledby="trace-detail-modal-label" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="trace-detail-modal-label">Trace Details</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body" id="trace-detail-content">
+            <!-- Content will be dynamically populated -->
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <%- include('partials/footer') %>
+  
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/js/results.js"></script>
+</body>
+</html>
+

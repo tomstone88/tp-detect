@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %> - Crypto Detector</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <%- include('partials/header') %>
+  
+  <div class="container mt-5">
+    <div class="row">
+      <div class="col-md-12">
+        <h1>New Scan</h1>
+        <p class="lead">Configure and start a new scan for cryptojacking indicators.</p>
+      </div>
+    </div>
+    
+    <div class="row mt-4">
+      <div class="col-md-8">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Scan Configuration</h5>
+            
+            <form id="scan-form">
+              <div class="mb-3">
+                <label for="scan-type" class="form-label">Scan Type</label>
+                <select class="form-select" id="scan-type" name="scanType" required>
+                  <option value="local">Local System</option>
+                  <option value="aws">AWS</option>
+                  <option value="gcp">GCP</option>
+                  <option value="azure">Azure</option>
+                  <option value="full">Full Scan (All)</option>
+                </select>
+              </div>
+              
+              <div id="aws-options" class="scan-options d-none">
+                <div class="mb-3">
+                  <label for="aws-regions" class="form-label">AWS Regions (comma-separated)</label>
+                  <input type="text" class="form-control" id="aws-regions" name="awsRegions" placeholder="us-east-1,us-west-2">
+                </div>
+                <div class="mb-3">
+                  <label for="aws-profile" class="form-label">AWS Profile</label>
+                  <input type="text" class="form-control" id="aws-profile" name="awsProfile" placeholder="default">
+                </div>
+              </div>
+              
+              <div id="gcp-options" class="scan-options d-none">
+                <div class="mb-3">
+                  <label for="gcp-projects" class="form-label">GCP Projects (comma-separated)</label>
+                  <input type="text" class="form-control" id="gcp-projects" name="gcpProjects" placeholder="project-id-1,project-id-2">
+                </div>
+              </div>
+              
+              <div id="azure-options" class="scan-options d-none">
+                <div class="mb-3">
+                  <label for="azure-subscriptions" class="form-label">Azure Subscriptions (comma-separated)</label>
+                  <input type="text" class="form-control" id="azure-subscriptions" name="azureSubscriptions" placeholder="subscription-id-1,subscription-id-2">
+                </div>
+              </div>
+              
+              <div class="mb-3">
+                <label for="scan-dir" class="form-label">Additional Directory to Scan (Local)</label>
+                <input type="text" class="form-control" id="scan-dir" name="scanDir" placeholder="/path/to/directory">
+              </div>
+              
+              <div class="mb-3 form-check">
+                <input type="checkbox" class="form-check-input" id="base64-decode" name="base64Decode" checked>
+                <label class="form-check-label" for="base64-decode">Decode Base64 Content</label>
+              </div>
+              
+              <button type="submit" class="btn btn-primary">Start Scan</button>
+            </form>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Scan Status</h5>
+            <div id="scan-status">
+              <p class="text-center">No scan in progress.</p>
+            </div>
+            <div class="progress d-none" id="scan-progress-container">
+              <div id="scan-progress" class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="card mt-4">
+          <div class="card-body">
+            <h5 class="card-title">Scan Steps</h5>
+            <ul class="list-group" id="scan-steps">
+              <li class="list-group-item d-flex justify-content-between align-items-center" id="step-local">
+                Local System
+                <span class="badge bg-secondary rounded-pill">Pending</span>
+              </li>
+              <li class="list-group-item d-flex justify-content-between align-items-center" id="step-aws">
+                AWS
+                <span class="badge bg-secondary rounded-pill">Pending</span>
+              </li>
+              <li class="list-group-item d-flex justify-content-between align-items-center" id="step-gcp">
+                GCP
+                <span class="badge bg-secondary rounded-pill">Pending</span>
+              </li>
+              <li class="list-group-item d-flex justify-content-between align-items-center" id="step-azure">
+                Azure
+                <span class="badge bg-secondary rounded-pill">Pending</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <%- include('partials/footer') %>
+  
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/js/scan.js"></script>
+</body>
+</html>
+
